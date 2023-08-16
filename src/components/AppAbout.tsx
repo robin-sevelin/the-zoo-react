@@ -1,7 +1,7 @@
 export const AppAbout = () => {
   return (
     <>
-      <AppAbout />
+      <h3>Denna sida använder ett djur api</h3>
     </>
   );
 };
