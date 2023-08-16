@@ -27,7 +27,7 @@ export const AppMain = () => {
   const feed = (id: number) => {
     const updatedAnimals = animals.map((animal) => {
       if (animal.id === id) {
-        return { ...animal, isFed: true };
+        return { ...animal, isFed: true, lastFed: new Date().toString() };
       } else {
         return animal;
       }
@@ -40,7 +40,7 @@ export const AppMain = () => {
   return (
     <>
       {animals.some((animal) => !animal.isFed) && (
-        <h3>Vissa djur är hungriga</h3>
+        <h3>vissa djur är hungriga</h3>
       )}
       <AppAnimals animals={animals} onFeed={feed} />
     </>

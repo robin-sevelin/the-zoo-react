@@ -1,13 +1,22 @@
-// import { createBrowserRouter } from 'react-router-dom';
-// import { AppHome } from './components/AppHome';
+import { createBrowserRouter } from 'react-router-dom';
+import { AppLayout } from './components/AppLayout';
+import { AppHome } from './components/AppHome';
 
-// export const router = createBrowserRouter([
-//   {
-//     path: '/',
-//     element: <AppHome />,
-//   },
-//   {
-//     path: '/about',
-//     element: <AppHome />,
-//   },
-// ]);
+import { AppMain } from './components/AppMain';
+
+export const router = createBrowserRouter([
+  {
+    path: '/',
+    Component: AppLayout,
+    children: [
+      {
+        path: '/',
+        Component: AppHome,
+      },
+      {
+        path: '/animals',
+        Component: AppMain,
+      },
+    ],
+  },
+]);

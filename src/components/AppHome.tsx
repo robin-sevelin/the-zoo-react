@@ -1,9 +1,7 @@
-import { AppMain } from './AppMain';
-
 export const AppHome = () => {
   return (
     <>
-      <AppMain />
+      <p>denna sida hanldar om djur</p>
     </>
   );
 };

@@ -13,7 +13,9 @@ export const AppAnimal = ({ animal, onFeed }: IAnimalProps) => {
     <div className={animal.isFed ? 'green' : 'red'}>
       <h3>{animal.name}</h3>
       <img width='100' height='100' src={animal.imageUrl} alt={animal.name} />
-      <button onClick={() => handleClick(animal.id)}>feed</button>
+      <button disabled={animal.isFed} onClick={() => handleClick(animal.id)}>
+        feed
+      </button>
     </div>
   );
 };
