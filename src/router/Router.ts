@@ -1,8 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { AppLayout } from './components/AppLayout';
-import { AppHome } from './components/AppHome';
-
-import { AppMain } from './components/AppMain';
+import { AppLayout } from '../components/AppLayout';
+import { AppHome } from '../components/AppHome';
+import { AppMain } from '../components/AppMain';
+import { AnimalInfo } from '../components/AnimalInfo';
 
 export const router = createBrowserRouter([
   {
@@ -16,6 +16,10 @@ export const router = createBrowserRouter([
       {
         path: '/animals',
         Component: AppMain,
+      },
+      {
+        path: '/animals/:id',
+        Component: AnimalInfo,
       },
     ],
   },

@@ -17,8 +17,6 @@ export const AppMain = () => {
 
   const getData = async () => {
     const response = await getAnimals();
-    const foo = await getAnimal(3);
-    console.log(foo);
 
     localStorage.setItem('animals', JSON.stringify(response));
     setAnimals(response);
@@ -37,12 +35,22 @@ export const AppMain = () => {
     localStorage.setItem('animals', JSON.stringify(updatedAnimals));
   };
 
+  const clickAnimal = async (id: number) => {
+    const response = await getAnimal(id);
+
+    localStorage.setItem('clickedAnimal', JSON.stringify(response));
+
+    const clickedAnimal = localStorage.getItem('clickedAnimal');
+
+    if (clickedAnimal) {
+      const parsed = JSON.parse(clickedAnimal);
+      localStorage.setItem('animalId', JSON.stringify(parsed.id));
+    }
+  };
+
   return (
     <>
-      {animals.some((animal) => !animal.isFed) && (
-        <h3>vissa djur är hungriga</h3>
-      )}
-      <AppAnimals animals={animals} onFeed={feed} />
+      <AppAnimals animals={animals} onFeed={feed} onClickAnimal={clickAnimal} />
     </>
   );
 };
