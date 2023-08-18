@@ -10,6 +10,7 @@ export const AppAnimal = ({ animal }: IAnimalProps) => {
       <div className={animal.isFed ? 'green' : 'red'}>
         <h3>{animal.name}</h3>
         <img
+          loading='lazy'
           width='100'
           height='100'
           src={animal.imageUrl}

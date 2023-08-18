@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { getAnimals } from '../services/DataService';
-import { useLocalStorage } from '../hooks/localStorage';
+import { useLocalStorage } from '../hooks/useStorage';
 import { IAnimal } from '../models/IAnimal';
 import { AnimalList } from './AnimalList';
 
