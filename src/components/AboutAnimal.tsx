@@ -2,6 +2,9 @@ import { Link, useParams } from 'react-router-dom';
 import { IAnimal } from '../models/IAnimal';
 import { useLocalStorage } from '../hooks/useStorage';
 import { HungerStatus } from './HungerStatus';
+import { DateTime } from 'luxon';
+import { useEffect } from 'react';
+import { checkHoursPassed } from '../services/TimeService';
 
 export const AboutAnimal = () => {
   const [animals, setAnimals] = useLocalStorage<IAnimal[]>('animals', []);
@@ -10,13 +13,34 @@ export const AboutAnimal = () => {
     (animal) => animal.id === Number(params.id)
   ) as IAnimal;
 
+  useEffect(() => {
+    const isThreeHoursPassed = checkHoursPassed(foundAnimal.lastFed);
+
+    if (isThreeHoursPassed) {
+      resetFeed();
+    }
+  });
+
+  const resetFeed = () => {
+    const updatedList = animals.map((animal) => {
+      if (animal) {
+        return {
+          ...animal,
+          isFed: false,
+        };
+      }
+      return animal;
+    });
+    setAnimals(updatedList);
+  };
+
   const feedAnimal = (animalIndex: number) => {
     const updatedList = animals.map((animal, index) => {
       if (index === animalIndex) {
         return {
           ...animal,
           isFed: true,
-          lastFed: new Date().toLocaleTimeString(),
+          lastFed: DateTime.now().toString(),
         };
       }
       return animal;
