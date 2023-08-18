@@ -2,22 +2,13 @@ import { IAnimal } from '../models/IAnimal';
 
 interface IAnimalProps {
   animal: IAnimal;
-  onClickAnimal: (animal: IAnimal) => void;
 }
 
-export const AppAnimal = ({ animal, onClickAnimal }: IAnimalProps) => {
-  const handleClick = (animal: IAnimal) => {
-    onClickAnimal(animal);
-  };
-
+export const AppAnimal = ({ animal }: IAnimalProps) => {
   return (
     <>
-      <div
-        className={animal.isFed ? 'green' : 'red'}
-        onClick={() => handleClick(animal)}
-      >
+      <div className={animal.isFed ? 'green' : 'red'}>
         <h3>{animal.name}</h3>
-
         <img
           width='100'
           height='100'

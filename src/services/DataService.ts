@@ -8,7 +8,7 @@ export const getAnimals = async (): Promise<IAnimal[]> => {
   return response;
 };
 
-export const getAnimal = async (id: number): Promise<IAnimal> => {
-  const response = await get<IAnimal>(`${BASE_URL}/${id}`);
-  return response;
-};
+// export const getAnimal = async (id: number): Promise<IAnimal> => {
+//   const response = await get<IAnimal>(`${BASE_URL}/${id}`);
+//   return response;
+// };

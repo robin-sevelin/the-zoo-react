@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
+import { IAnimal } from '../models/IAnimal';
 
-const getValue = <T>(key: string, initialValue: T) => {
-  const savedValue = JSON.parse(localStorage.getItem(key) || 'null') as T;
+const getValue = (key: string, initialValue: IAnimal[]) => {
+  const savedValue = JSON.parse(localStorage.getItem(key) || 'null');
   if (savedValue !== null) {
     return savedValue;
   }
@@ -9,7 +10,7 @@ const getValue = <T>(key: string, initialValue: T) => {
   return initialValue;
 };
 
-export const useLocalStorage = <T>(key: string, initialValue: T) => {
+export const useLocalStorage = <T>(key: string, initialValue: IAnimal[]) => {
   const [value, setValue] = useState<T>(() => {
     return getValue(key, initialValue);
   });

@@ -4,23 +4,15 @@ import { AppAnimal } from './Animal';
 
 interface IAnimalsProps {
   animals: IAnimal[];
-  onClickAnimal: (animal: IAnimal) => void;
 }
 
-export const AnimalList = ({
-  animals,
-
-  onClickAnimal,
-}: IAnimalsProps) => {
-  const clickAnimal = (animal: IAnimal) => {
-    onClickAnimal(animal);
-  };
+export const AnimalList = ({ animals }: IAnimalsProps) => {
   return (
     <>
       {animals.map((animal) => (
         <div key={animal.id}>
-          <Link to={'/animals/' + 1}>
-            <AppAnimal animal={animal} onClickAnimal={clickAnimal} />
+          <Link to={'/animals/' + animal.id}>
+            <AppAnimal animal={animal} />
           </Link>
         </div>
       ))}

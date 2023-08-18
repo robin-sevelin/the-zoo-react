@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-
 import { getAnimals } from '../services/DataService';
 import { useLocalStorage } from '../hooks/localStorage';
 import { IAnimal } from '../models/IAnimal';
@@ -19,13 +18,9 @@ export const Main = () => {
     setAnimals(response);
   };
 
-  const clickAnimal = async (animal: IAnimal) => {
-    console.log(animal.id);
-  };
-
   return (
     <>
-      <AnimalList animals={animals} onClickAnimal={clickAnimal} />
+      <AnimalList animals={animals} />
     </>
   );
 };
