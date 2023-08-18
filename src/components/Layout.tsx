@@ -1,11 +1,11 @@
 import { Outlet } from 'react-router-dom';
-import { AppHeader } from './AppHeader';
+import { Header } from './Header';
 
-export const AppLayout = () => {
+export const Layout = () => {
   return (
     <>
       <header>
-        <AppHeader />
+        <Header />
       </header>
       <main>
         <Outlet></Outlet>

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-export const AppNav = () => {
+export const Navigation = () => {
   return (
     <nav>
       <ul>

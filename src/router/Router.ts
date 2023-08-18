@@ -1,25 +1,25 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { AppLayout } from '../components/AppLayout';
-import { AppHome } from '../components/AppHome';
-import { AppMain } from '../components/AppMain';
-import { AnimalInfo } from '../components/AnimalInfo';
+import { Layout } from '../components/Layout';
+import { Home } from '../components/Home';
+import { Main } from '../components/Main';
+import { AboutAnimal } from '../components/AboutAnimal';
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    Component: AppLayout,
+    Component: Layout,
     children: [
       {
         path: '/',
-        Component: AppHome,
+        Component: Home,
       },
       {
         path: '/animals',
-        Component: AppMain,
+        Component: Main,
       },
       {
         path: '/animals/:id',
-        Component: AnimalInfo,
+        Component: AboutAnimal,
       },
     ],
   },

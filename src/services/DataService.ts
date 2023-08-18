@@ -5,16 +5,10 @@ const BASE_URL = 'https://animals.azurewebsites.net/api/animals';
 
 export const getAnimals = async (): Promise<IAnimal[]> => {
   const response = await get<IAnimal[]>(BASE_URL);
-
-  if (response) {
-    return response;
-  } else {
-    return [];
-  }
+  return response;
 };
 
 export const getAnimal = async (id: number): Promise<IAnimal> => {
   const response = await get<IAnimal>(`${BASE_URL}/${id}`);
-
   return response;
 };

@@ -2,24 +2,19 @@ import { IAnimal } from '../models/IAnimal';
 
 interface IAnimalProps {
   animal: IAnimal;
-  onFeed: (id: number) => void;
-  onClickAnimal: (id: number) => void;
+  onClickAnimal: (animal: IAnimal) => void;
 }
 
 export const AppAnimal = ({ animal, onClickAnimal }: IAnimalProps) => {
-  // const handleClick = (id: number) => {
-  //   onFeed(id);
-  // };
-
-  const handleClick = (id: number) => {
-    onClickAnimal(id);
+  const handleClick = (animal: IAnimal) => {
+    onClickAnimal(animal);
   };
 
   return (
     <>
       <div
         className={animal.isFed ? 'green' : 'red'}
-        onClick={() => handleClick(animal.id)}
+        onClick={() => handleClick(animal)}
       >
         <h3>{animal.name}</h3>
 
@@ -33,7 +28,6 @@ export const AppAnimal = ({ animal, onClickAnimal }: IAnimalProps) => {
             currentTarget.src = '/src/assets/placeholder.jpg';
           }}
         />
-
         <p>{animal.shortDescription}</p>
       </div>
     </>
