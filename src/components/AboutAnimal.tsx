@@ -3,27 +3,30 @@ import { IAnimal } from '../models/IAnimal';
 import { useLocalStorage } from '../hooks/useStorage';
 import { HungerStatus } from './HungerStatus';
 import { DateTime } from 'luxon';
-import { useEffect } from 'react';
-import { checkHoursPassed } from '../services/TimeService';
+import { useEffect, useState } from 'react';
+import { threeHoursPassed } from '../services/TimeService';
 
 export const AboutAnimal = () => {
   const [animals, setAnimals] = useLocalStorage<IAnimal[]>('animals', []);
+  const [timeStamp, setTimeStamp] = useState(false);
   const params = useParams();
   const foundAnimal = animals.find(
     (animal) => animal.id === Number(params.id)
   ) as IAnimal;
 
   useEffect(() => {
-    const isThreeHoursPassed = checkHoursPassed(foundAnimal.lastFed);
+    if (foundAnimal.isFed) {
+      const isThreeHoursPassed = threeHoursPassed(foundAnimal.lastFed);
 
-    if (isThreeHoursPassed) {
-      resetFeed();
+      if (isThreeHoursPassed) {
+        resetFeed(foundAnimal);
+      }
     }
   });
 
-  const resetFeed = () => {
+  const resetFeed = (foundAnimal: IAnimal) => {
     const updatedList = animals.map((animal) => {
-      if (animal) {
+      if (animal.id === foundAnimal.id) {
         return {
           ...animal,
           isFed: false,
@@ -32,6 +35,7 @@ export const AboutAnimal = () => {
       return animal;
     });
     setAnimals(updatedList);
+    setTimeStamp(false);
   };
 
   const feedAnimal = (animalIndex: number) => {
@@ -46,6 +50,7 @@ export const AboutAnimal = () => {
       return animal;
     });
     setAnimals(updatedList);
+    setTimeStamp(true);
   };
 
   return (
@@ -64,7 +69,7 @@ export const AboutAnimal = () => {
         }}
       />
       <button
-        disabled={foundAnimal.isFed}
+        disabled={timeStamp}
         onClick={() => feedAnimal(foundAnimal.id - 1)}
       >
         Mata

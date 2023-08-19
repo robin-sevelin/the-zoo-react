@@ -8,7 +8,7 @@ export const HungerStatus = ({ animal }: IHungerStatusProps) => {
   return (
     <div>
       <p>
-        Status: {animal.isFed ? <span>Är mätt</span> : <span>Är hungrig</span>}{' '}
+        Status: {animal.isFed ? <span>Är mätt</span> : <span>Är hungrig</span>}
       </p>
     </div>
   );
