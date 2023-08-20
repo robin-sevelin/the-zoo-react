@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon';
 
 export const threeHoursPassed = (timeStamp: string) => {
-  const threeHoursPassed = DateTime.now().minus({ hours: 3 });
+  const threeHoursPassed = DateTime.now().minus({ hour: 3 });
   const timestampDateTime = DateTime.fromISO(timeStamp);
 
   return timestampDateTime <= threeHoursPassed;

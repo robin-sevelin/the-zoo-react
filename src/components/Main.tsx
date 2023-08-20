@@ -11,10 +11,10 @@ export const Main = () => {
   useEffect(() => {
     const fedAnimals = animals.filter((animal) => animal.isFed === true);
     if (fedAnimals) {
-      fedAnimals.forEach((checkedAnimal) => {
-        const isFourHoursPassed = fourHoursPassed(checkedAnimal.lastFed);
+      fedAnimals.forEach((filteredAnimal) => {
+        const isFourHoursPassed = fourHoursPassed(filteredAnimal.lastFed);
         if (isFourHoursPassed) {
-          resetFeed(checkedAnimal);
+          resetFeed(filteredAnimal);
         }
       });
     }
@@ -23,9 +23,9 @@ export const Main = () => {
     }
   });
 
-  const resetFeed = (checkedAnimal: IAnimal) => {
+  const resetFeed = (filteredAnimal: IAnimal) => {
     const updatedList = animals.map((animal) => {
-      if (animal.id === checkedAnimal.id) {
+      if (animal.id === filteredAnimal.id) {
         return {
           ...animal,
           isFed: false,

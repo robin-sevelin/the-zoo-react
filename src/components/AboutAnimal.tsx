@@ -1,15 +1,15 @@
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { IAnimal } from '../models/IAnimal';
 import { useLocalStorage } from '../hooks/useStorage';
-import { HungerStatus } from './HungerStatus';
 import { DateTime } from 'luxon';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { threeHoursPassed } from '../services/TimeService';
+import { HungerStatus } from './HungerStatus';
 
 export const AboutAnimal = () => {
   const [animals, setAnimals] = useLocalStorage<IAnimal[]>('animals', []);
-  const [timeStamp, setTimeStamp] = useState(false);
   const params = useParams();
+
   const foundAnimal = animals.find(
     (animal) => animal.id === Number(params.id)
   ) as IAnimal;
@@ -35,7 +35,6 @@ export const AboutAnimal = () => {
       return animal;
     });
     setAnimals(updatedList);
-    setTimeStamp(false);
   };
 
   const feedAnimal = (animalIndex: number) => {
@@ -50,34 +49,34 @@ export const AboutAnimal = () => {
       return animal;
     });
     setAnimals(updatedList);
-    setTimeStamp(true);
   };
 
   return (
     <div className='animal-info'>
       <h2>{foundAnimal.name}</h2>
-      <p>{foundAnimal.longDescription}</p>
       <img
-        loading='lazy'
-        width={200}
-        height={250}
+        className='about-animal-img'
         src={foundAnimal.imageUrl}
         alt={foundAnimal.name}
         onError={({ currentTarget }) => {
           currentTarget.onerror = null;
-          currentTarget.src = '/src/assets/placeholder.jpg';
+          currentTarget.src = '/src/assets/404.avif';
         }}
       />
+      <h3>Om {foundAnimal.name}</h3>
+      <p>{foundAnimal.shortDescription}</p>
+      <h3>Fakta</h3>
+      <p>{foundAnimal.longDescription}</p>
+      <p>
+        senast matad: {DateTime.fromISO(foundAnimal.lastFed).toFormat('HH:mm')}
+      </p>
+      <HungerStatus animal={foundAnimal} />
       <button
-        disabled={timeStamp}
+        disabled={foundAnimal.isFed}
         onClick={() => feedAnimal(foundAnimal.id - 1)}
       >
         Mata
       </button>
-      <Link to='/animals'>
-        <button>Take me back</button>
-      </Link>
-      <HungerStatus animal={foundAnimal} />
     </div>
   );
 };

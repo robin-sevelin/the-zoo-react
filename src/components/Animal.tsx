@@ -1,4 +1,5 @@
 import { IAnimal } from '../models/IAnimal';
+import { threeHoursPassed } from '../services/TimeService';
 import { HungerStatus } from './HungerStatus';
 
 interface IAnimalProps {
@@ -6,24 +7,28 @@ interface IAnimalProps {
 }
 
 export const AppAnimal = ({ animal }: IAnimalProps) => {
+  let className = animal.isFed ? 'green' : 'red';
+
+  if (animal.isFed && threeHoursPassed(animal.lastFed)) {
+    className = 'yellow';
+  }
+
   return (
-    <>
-      <div className={animal.isFed ? 'green' : 'red'}>
+    <div className={className}>
+      <h3>{animal.name}</h3>
+
+      <img
+        className='animal-card-img'
+        src={animal.imageUrl}
+        alt={animal.name}
+        onError={({ currentTarget }) => {
+          currentTarget.onerror = null;
+          currentTarget.src = '/src/assets/404.avif';
+        }}
+      />
+      <div className='hunger-status'>
         <HungerStatus animal={animal} />
-        <h3>{animal.name}</h3>
-        <img
-          loading='lazy'
-          width='100'
-          height='100'
-          src={animal.imageUrl}
-          alt={animal.name}
-          onError={({ currentTarget }) => {
-            currentTarget.onerror = null;
-            currentTarget.src = '/src/assets/placeholder.jpg';
-          }}
-        />
-        <p>{animal.shortDescription}</p>
       </div>
-    </>
+    </div>
   );
 };
