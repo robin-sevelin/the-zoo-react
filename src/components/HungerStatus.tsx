@@ -7,23 +7,25 @@ interface IHungerStatusProps {
 }
 
 export const HungerStatus = ({ animal }: IHungerStatusProps) => {
-  const [threeHours, setThreeHours] = useState(false);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     if (animal.isFed) {
       const isThreeHoursPassed = threeHoursPassed(animal.lastFed);
 
-      if (isThreeHoursPassed) {
-        setThreeHours(isThreeHoursPassed);
+      if (animal.isFed && !isThreeHoursPassed) {
+        setMessage('Är mätt');
+      } else {
+        setMessage('Börjar bli hungrig');
       }
+    } else {
+      setMessage('Är hungrig');
     }
-  }, [threeHours, animal.isFed, animal.lastFed]);
+  }, [animal.isFed, animal.lastFed]);
 
   return (
     <>
-      {animal.isFed && !threeHours && <span>Är mätt</span>}
-      {!animal.isFed && <span>Är hungrig</span>}
-      {threeHours && animal.isFed && <span>Börjar bli hungrig</span>}
+      <span>{message}</span>
     </>
   );
 };

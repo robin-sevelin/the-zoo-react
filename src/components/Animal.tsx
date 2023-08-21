@@ -23,7 +23,7 @@ export const AppAnimal = ({ animal }: IAnimalProps) => {
         alt={animal.name}
         onError={({ currentTarget }) => {
           currentTarget.onerror = null;
-          currentTarget.src = '/src/assets/404.avif';
+          currentTarget.src = '/src/assets/404.png';
         }}
       />
       <div className='hunger-status'>

@@ -1,7 +1,10 @@
 export const Home = () => {
   return (
-    <>
-      <h2>Denna sida handlar om hur man sköter sina djur</h2>
-    </>
+    <div className='home'>
+      <h2>Välkommen till "The Zoo"</h2>
+      <p>
+        Se till att djuren är matade och passa på att läsa lite fakta om dom.
+      </p>
+    </div>
   );
 };

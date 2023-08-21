@@ -4,7 +4,6 @@ import { useLocalStorage } from '../hooks/useStorage';
 import { DateTime } from 'luxon';
 import { useEffect } from 'react';
 import { threeHoursPassed } from '../services/TimeService';
-import { HungerStatus } from './HungerStatus';
 
 export const AboutAnimal = () => {
   const [animals, setAnimals] = useLocalStorage<IAnimal[]>('animals', []);
@@ -54,13 +53,14 @@ export const AboutAnimal = () => {
   return (
     <div className='animal-info'>
       <h2>{foundAnimal.name}</h2>
+      <p>{foundAnimal.latinName}</p>
       <img
         className='about-animal-img'
         src={foundAnimal.imageUrl}
         alt={foundAnimal.name}
         onError={({ currentTarget }) => {
           currentTarget.onerror = null;
-          currentTarget.src = '/src/assets/404.avif';
+          currentTarget.src = '/src/assets/404.png';
         }}
       />
       <h3>Om {foundAnimal.name}</h3>
@@ -70,7 +70,6 @@ export const AboutAnimal = () => {
       <p>
         senast matad: {DateTime.fromISO(foundAnimal.lastFed).toFormat('HH:mm')}
       </p>
-      <HungerStatus animal={foundAnimal} />
       <button
         disabled={foundAnimal.isFed}
         onClick={() => feedAnimal(foundAnimal.id - 1)}

@@ -9,6 +9,13 @@ export const Main = () => {
   const [animals, setAnimals] = useLocalStorage<IAnimal[]>('animals', []);
 
   useEffect(() => {
+    if (animals.length === 0) {
+      getData();
+    }
+    checkFedAnimals();
+  });
+
+  const checkFedAnimals = () => {
     const fedAnimals = animals.filter((animal) => animal.isFed === true);
     if (fedAnimals) {
       fedAnimals.forEach((filteredAnimal) => {
@@ -18,10 +25,7 @@ export const Main = () => {
         }
       });
     }
-    if (animals.length === 0) {
-      getData();
-    }
-  });
+  };
 
   const resetFeed = (filteredAnimal: IAnimal) => {
     const updatedList = animals.map((animal) => {
