@@ -4,8 +4,7 @@ import { useLocalStorage } from '../hooks/useStorage';
 import { DateTime } from 'luxon';
 import { useEffect } from 'react';
 import { threeHoursPassed } from '../services/TimeService';
-import { feedAnimal } from '../services/FeedService';
-import { resetFeed } from '../services/ResetFeedService';
+import { resetFeed, feedAnimal } from '../services/AnimalService';
 
 export const AboutAnimal = () => {
   const [animals, setAnimals] = useLocalStorage<IAnimal[]>('animals', []);

@@ -1,15 +1,14 @@
 import { DateTime } from 'luxon';
+import { hoursPassed } from './TimeServiceBase';
 
 export const threeHoursPassed = (timeStamp: string) => {
   const threeHoursPassed = DateTime.now().minus({ hours: 3 });
-  const timestampDateTime = DateTime.fromISO(timeStamp);
 
-  return timestampDateTime <= threeHoursPassed;
+  return hoursPassed(timeStamp) <= threeHoursPassed;
 };
 
 export const fourHoursPassed = (timeStamp: string) => {
   const fourHoursPassed = DateTime.now().minus({ hours: 4 });
-  const timestampDateTime = DateTime.fromISO(timeStamp);
 
-  return timestampDateTime <= fourHoursPassed;
+  return hoursPassed(timeStamp) <= fourHoursPassed;
 };

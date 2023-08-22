@@ -4,7 +4,7 @@ import { useLocalStorage } from '../hooks/useStorage';
 import { IAnimal } from '../models/IAnimal';
 import { AnimalList } from './AnimalList';
 import { fourHoursPassed } from '../services/TimeService';
-import { resetFeed } from '../services/ResetFeedService';
+import { resetFeed } from '../services/AnimalService';
 
 export const Main = () => {
   const [animals, setAnimals] = useLocalStorage<IAnimal[]>('animals', []);
