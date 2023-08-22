@@ -48,6 +48,10 @@ body {
 }
 
 .home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background-color: #f0f8ea;
   padding: 2rem;
   max-width: 600px;

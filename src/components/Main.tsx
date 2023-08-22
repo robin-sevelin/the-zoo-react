@@ -4,6 +4,7 @@ import { useLocalStorage } from '../hooks/useStorage';
 import { IAnimal } from '../models/IAnimal';
 import { AnimalList } from './AnimalList';
 import { fourHoursPassed } from '../services/TimeService';
+import { resetFeed } from '../services/ResetFeedService';
 
 export const Main = () => {
   const [animals, setAnimals] = useLocalStorage<IAnimal[]>('animals', []);
@@ -21,22 +22,14 @@ export const Main = () => {
       fedAnimals.forEach((filteredAnimal) => {
         const isFourHoursPassed = fourHoursPassed(filteredAnimal.lastFed);
         if (isFourHoursPassed) {
-          resetFeed(filteredAnimal);
+          reset(filteredAnimal);
         }
       });
     }
   };
 
-  const resetFeed = (filteredAnimal: IAnimal) => {
-    const updatedList = animals.map((animal) => {
-      if (animal.id === filteredAnimal.id) {
-        return {
-          ...animal,
-          isFed: false,
-        };
-      }
-      return animal;
-    });
+  const reset = (foundAnimal: IAnimal) => {
+    const updatedList = resetFeed(foundAnimal, animals);
     setAnimals(updatedList);
   };
 

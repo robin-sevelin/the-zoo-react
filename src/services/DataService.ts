@@ -1,5 +1,5 @@
 import { IAnimal } from '../models/IAnimal';
-import { get } from './ServiceBase';
+import { get } from './DataServiceBase';
 
 const BASE_URL = 'https://animals.azurewebsites.net/api/animals';
 
