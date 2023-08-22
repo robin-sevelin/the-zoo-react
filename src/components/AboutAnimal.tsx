@@ -1,13 +1,15 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { IAnimal } from '../models/IAnimal';
 import { useLocalStorage } from '../hooks/useStorage';
 import { DateTime } from 'luxon';
-import { useEffect } from 'react';
-import { threeHoursPassed } from '../services/TimeService';
+import { useEffect, useState } from 'react';
+import { fourHoursPassed, threeHoursPassed } from '../services/TimeService';
 import { resetFeed, feedAnimal } from '../services/AnimalService';
+import { HungerStatus } from './HungerStatus';
 
 export const AboutAnimal = () => {
   const [animals, setAnimals] = useLocalStorage<IAnimal[]>('animals', []);
+  const [threeHours, setThreeHours] = useState(false);
   const params = useParams();
 
   const foundAnimal = animals.find(
@@ -16,13 +18,22 @@ export const AboutAnimal = () => {
 
   useEffect(() => {
     if (foundAnimal.isFed) {
-      const isThreeHoursPassed = threeHoursPassed(foundAnimal.lastFed);
-
-      if (isThreeHoursPassed) {
-        reset(foundAnimal);
-      }
+      checkFedAnimals();
     }
   });
+
+  const checkFedAnimals = () => {
+    const isThreeHoursPassed = threeHoursPassed(foundAnimal.lastFed);
+    setThreeHours(isThreeHoursPassed);
+
+    if (isThreeHoursPassed) {
+      const isFourHoursPassed = fourHoursPassed(foundAnimal.lastFed);
+      if (isFourHoursPassed) {
+        reset(foundAnimal);
+        setThreeHours(false);
+      }
+    }
+  };
 
   const reset = (foundAnimal: IAnimal) => {
     const updatedList = resetFeed(foundAnimal, animals);
@@ -55,12 +66,16 @@ export const AboutAnimal = () => {
       <p>
         senast matad: {DateTime.fromISO(foundAnimal.lastFed).toFormat('HH:mm')}
       </p>
+      <HungerStatus animal={foundAnimal} />
       <button
-        disabled={foundAnimal.isFed}
+        disabled={!threeHours && foundAnimal.isFed}
         onClick={() => feed(foundAnimal.id - 1)}
       >
         Mata
       </button>
+      <Link to='/animals'>
+        <button>Tillbaka</button>
+      </Link>
     </div>
   );
 };

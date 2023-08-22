@@ -21,6 +21,7 @@ export const Main = () => {
     if (fedAnimals) {
       fedAnimals.forEach((filteredAnimal) => {
         const isFourHoursPassed = fourHoursPassed(filteredAnimal.lastFed);
+
         if (isFourHoursPassed) {
           reset(filteredAnimal);
         }
