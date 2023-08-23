@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getAnimals } from '../services/DataService';
 import { useLocalStorage } from '../hooks/useStorage';
 import { IAnimal } from '../models/IAnimal';
@@ -8,6 +8,7 @@ import { resetFeed } from '../services/AnimalService';
 
 export const Main = () => {
   const [animals, setAnimals] = useLocalStorage<IAnimal[]>('animals', []);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     if (animals.length === 0) {
@@ -35,13 +36,22 @@ export const Main = () => {
   };
 
   const getData = async () => {
-    const response = await getAnimals();
-    setAnimals(response);
+    try {
+      const response = await getAnimals();
+      setAnimals(response);
+    } catch (error) {
+      setError(true);
+    }
   };
 
   return (
     <>
       <AnimalList animals={animals} />
+      {error && (
+        <h2 style={{ color: 'red', fontSize: '2rem' }}>
+          Lyckades inte hämta djuren 😢
+        </h2>
+      )}
     </>
   );
 };
