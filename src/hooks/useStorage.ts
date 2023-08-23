@@ -6,7 +6,6 @@ const getValue = (key: string, initialValue: IAnimal[]) => {
   if (savedValue !== null) {
     return savedValue;
   }
-
   return initialValue;
 };
 
@@ -18,6 +17,5 @@ export const useLocalStorage = <T>(key: string, initialValue: IAnimal[]) => {
   useEffect(() => {
     localStorage.setItem(key, JSON.stringify(value));
   }, [value, key]);
-
   return [value, setValue] as const;
 };

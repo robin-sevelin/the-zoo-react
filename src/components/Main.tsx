@@ -1,21 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { getAnimals } from '../services/DataService';
 import { useLocalStorage } from '../hooks/useStorage';
 import { IAnimal } from '../models/IAnimal';
 import { AnimalList } from './AnimalList';
 import { fourHoursPassed } from '../services/TimeService';
 import { resetFeed } from '../services/AnimalService';
+import { useAnimalData } from '../hooks/useAnimalData';
 
 export const Main = () => {
   const [animals, setAnimals] = useLocalStorage<IAnimal[]>('animals', []);
   const [error, setError] = useState(false);
-
-  useEffect(() => {
-    if (animals.length === 0) {
-      getData();
-    }
-    checkFedAnimals();
-  });
 
   const checkFedAnimals = () => {
     const fedAnimals = animals.filter((animal) => animal.isFed === true);
@@ -43,6 +37,8 @@ export const Main = () => {
       setError(true);
     }
   };
+
+  useAnimalData(animals, getData, checkFedAnimals);
 
   return (
     <>
