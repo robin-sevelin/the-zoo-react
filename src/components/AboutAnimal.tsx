@@ -51,12 +51,14 @@ export const AboutAnimal = () => {
       <h2>{foundAnimal.name}</h2>
       <p>{foundAnimal.latinName}</p>
       <img
+        loading='lazy'
         className='about-animal-img'
         src={foundAnimal.imageUrl}
         alt={foundAnimal.name}
         onError={({ currentTarget }) => {
           currentTarget.onerror = null;
           currentTarget.src = '/src/assets/404.png';
+          currentTarget.loading = 'lazy';
         }}
       />
       <h3>Om {foundAnimal.name}</h3>

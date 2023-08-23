@@ -18,6 +18,7 @@ export const AppAnimal = ({ animal }: IAnimalProps) => {
       <h3>{animal.name}</h3>
 
       <img
+        loading='lazy'
         className='animal-card-img'
         src={animal.imageUrl}
         alt={animal.name}

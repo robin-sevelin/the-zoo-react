@@ -7,6 +7,7 @@ export const Home = () => {
           Se till att djuren är matade och passa på att läsa lite fakta om dom.
         </p>
         <img
+          loading='lazy'
           height={300}
           width={300}
           src='/src/assets/assetstream.webp'
