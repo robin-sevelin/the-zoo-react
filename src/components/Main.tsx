@@ -42,7 +42,12 @@ export const Main = () => {
 
   return (
     <>
-      <AnimalList animals={animals} />
+      {animals.length === 0 ? (
+        <p style={{ color: 'red', fontSize: '2rem' }}>hämtar djuren</p>
+      ) : (
+        <AnimalList animals={animals} />
+      )}
+
       {error && (
         <h2 style={{ color: 'red', fontSize: '2rem' }}>
           Lyckades inte hämta djuren 😢
