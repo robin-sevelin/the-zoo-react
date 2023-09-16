@@ -1,53 +1,24 @@
-import { useState } from 'react';
-import { getAnimals } from '../services/DataService';
-import { useLocalStorage } from '../hooks/useStorage';
+import { useContext } from 'react';
 import { IAnimal } from '../models/IAnimal';
 import { AnimalList } from './AnimalList';
-import { fourHoursPassed } from '../services/TimeService';
-import { resetFeed } from '../services/AnimalService';
-import { useAnimalData } from '../hooks/useAnimalData';
+import { AnimalsContext } from '../context/AnimalsContext';
+import { useCheckFedAnimals } from '../hooks/useCheckAnimals';
+import { ActionType } from '../reducer/AnimalsReducer';
 
 export const Main = () => {
-  const [animals, setAnimals] = useLocalStorage<IAnimal[]>('animals', []);
-  const [error, setError] = useState(false);
-
-  const checkFedAnimals = () => {
-    const fedAnimals = animals.filter((animal) => animal.isFed === true);
-    if (fedAnimals) {
-      fedAnimals.forEach((filteredAnimal) => {
-        const isFourHoursPassed = fourHoursPassed(filteredAnimal.lastFed);
-
-        if (isFourHoursPassed) {
-          reset(filteredAnimal);
-        }
-      });
-    }
-  };
+  const { animals, dispatch } = useContext(AnimalsContext);
 
   const reset = (foundAnimal: IAnimal) => {
-    const updatedList = resetFeed(foundAnimal, animals);
-    setAnimals(updatedList);
+    dispatch({
+      type: ActionType.RESET_ANIMAL,
+      payload: JSON.stringify(foundAnimal),
+    });
   };
 
-  const getData = async () => {
-    try {
-      const response = await getAnimals();
-      setAnimals(response);
-    } catch (error) {
-      setError(true);
-    }
-  };
-
-  useAnimalData(animals, getData, checkFedAnimals);
-
+  useCheckFedAnimals(animals, reset);
   return (
     <>
       <AnimalList animals={animals} />
-      {error && (
-        <h2 style={{ color: 'red', fontSize: '2rem' }}>
-          Lyckades inte hämta djuren 😢
-        </h2>
-      )}
     </>
   );
 };
